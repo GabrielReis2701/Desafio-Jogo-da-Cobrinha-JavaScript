@@ -2,6 +2,7 @@ let canvas = document.getElementById("snake");
 let context = canvas.getContext ("2d");
 let box = 32;
 let snake = [];
+var  pontuacao = 0;
 snake[0] = {
     x: 8 * box,
     y: 8 * box
@@ -27,6 +28,12 @@ function criarCobrinha(){
 function Comida(){
     context.fillStyle = "red";
     context.fillRect(food.x, food.y, box, box);
+}
+//Poutuação do Jogo
+function Placar(){
+    context.font = "bold 15px Arial";
+    context.fillStyle = "#864ed4"
+    context.fillText("PONTOS: "+pontuacao,10,20);
 }
 
 document.addEventListener('keydown',update);
@@ -66,12 +73,15 @@ function iniciarJogo(){
         if(snake[0].x == snake[i].x && snake[0].y == snake[i].y){
             clearInterval(jogo);
             alert('Gamer Over (-_-)' );
+            location.reload();
+            
         }
     }
 
     criarBG();
     criarCobrinha();
     Comida();
+    Placar();
 
     let snakeX = snake[0].x;
     let snakeY = snake[0].y;
@@ -85,6 +95,7 @@ function iniciarJogo(){
         snake.pop();
 
     }else{
+        pontuacao++;
         food.x = Math.floor(Math.random() * 15 + 1) * box;
         food.y = Math.floor(Math.random() * 15 + 1) * box;
     }
